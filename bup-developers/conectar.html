@@ -1,0 +1,12 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Conectar conta · Bup for Developers</title><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Silkscreen:wght@400;700&display=swap"><link rel="stylesheet" href="/dev.css"></head><body>
+<main><div class="page"><h1>Conectar conta</h1><div class="card" id="c"><p class="lead" id="t" style="margin:0">Carregando...</p></div></div></main>
+<footer>Bup for Developers · O bot nunca recebe nem guarda a senha de ninguém.</footer><script src="/dev.js"></script>
+<script>
+const code=new URLSearchParams(location.search).get('code')||'',c=document.getElementById('c');
+const msg=(h)=>c.innerHTML=h;
+(async()=>{const u=await me();if(!u)return msg('<p class="lead" style="margin-bottom:20px">Entre na sua conta Bup para continuar.</p><a class="btn" href="/entrar?next='+encodeURIComponent('/conectar?code='+code)+'">Entrar ou criar conta</a>');
+try{const r=await api('link?code='+encodeURIComponent(code));if(r.status!=='pending')return msg('<p class="lead" style="margin:0">Esse link já foi usado.</p>');
+msg('<h2 style="margin-top:0">'+esc(r.app)+' quer conectar com a sua conta</h2><p class="lead" style="margin-bottom:22px">Ele vai receber só o seu ID e o seu nome ('+esc(u.name)+'). Sua senha nunca é compartilhada.</p><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="ok">Autorizar</button><button class="btn g" id="no">Negar</button></div>');
+const send=async v=>{try{await api('link',{code,approve:v});msg('<p class="lead" style="margin:0">'+(v?'Pronto! Você já pode voltar ao Discord.':'Conexão negada.')+'</p>')}catch(x){msg('<p class="lead" style="margin:0">'+esc(x.message)+'</p>')}};
+ok.onclick=()=>send(true);no.onclick=()=>send(false)}catch(x){msg('<p class="lead" style="margin:0">'+esc(x.message)+'</p>')}})();
+</script></body></html>

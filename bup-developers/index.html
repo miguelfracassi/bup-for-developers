@@ -1,0 +1,19 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Início · Bup for Developers</title><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Silkscreen:wght@400;700&display=swap"><link rel="stylesheet" href="/dev.css"></head><body>
+<main><section class="hero"><div><h1>Você programa<br>o futuro digital</h1><p>Crie uma aplicação, pegue sua chave de API e conecte contas do Bup ao seu bot de Discord em poucos minutos.</p>
+<div class="btns"><a class="btn" href="/criar-app">Criar App</a><a class="btn g" href="/docs">Ler a documentação</a></div></div>
+<div class="vid"><video autoplay muted loop playsinline preload="auto" poster="/assets/hero.jpg"><source src="/assets/hero.mp4" type="video/mp4"></video></div></section>
+<section class="sec"><h2>Uma API simples e segura</h2><p class="lead">Tudo funciona por HTTPS e JSON. Sem SDK obrigatório: se o seu bot faz requisições, ele fala com o Bup.</p>
+<div class="grid">
+<div class="tile"><div class="ic"><svg class="i" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></div><h3>Conectar contas</h3><p>Ligue o usuário do Discord a uma conta Bup com autorização feita pela própria pessoa.</p></div>
+<div class="tile"><div class="ic"><svg class="i" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="m11 12 9-9M16 7l3 3"/></svg></div><h3>Chave por aplicação</h3><p>Cada app tem a sua chave. Se vazar, gere outra no painel e a antiga para de funcionar na hora.</p></div>
+<div class="tile"><div class="ic"><svg class="i" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div><h3>Zero senhas no bot</h3><p>A pessoa autoriza no site do Bup. O bot só recebe ID e nome, nunca senha.</p></div>
+</div></section>
+<section class="sec"><h2>Como funciona</h2><p class="lead">Quatro passos, do app ao usuário conectado.</p>
+<div class="flow"><div><b>Crie o app</b>Dê um nome, escolha Bot de Discord e Conectar contas.</div><div><b>Pegue a chave</b>Ela aparece uma vez. Guarde em variável de ambiente.</div><div><b>Peça o link</b>Seu bot chama a API e manda a url para a pessoa.</div><div><b>Receba o resultado</b>Depois que ela autoriza, a API devolve o ID e o nome dela.</div></div></section>
+<section class="sec"><h2>Primeira chamada</h2><p class="lead">Veja a requisição que cria um pedido de conexão.</p>
+<pre><span class="c"># POST /api/v1/link</span>
+curl -X POST https://SEU-SITE/api/v1/link \
+  -H <span class="s">"Authorization: Bearer bup_sk_SUA_CHAVE"</span> \
+  -d <span class="s">&#39;{"external_id": "ID_DO_DISCORD"}&#39;</span></pre>
+<a class="btn g" href="/docs">Ver documentação completa</a></section></main>
+<footer>Bup for Developers · O bot nunca recebe nem guarda a senha de ninguém.</footer><script src="/dev.js"></script></body></html>

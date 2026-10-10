@@ -1,0 +1,13 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Entrar · Bup for Developers</title><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Silkscreen:wght@400;700&display=swap"><link rel="stylesheet" href="/dev.css"></head><body>
+<main><div class="page"><h1>Conta de desenvolvedor</h1><p class="lead" id="why">Entre ou crie sua conta para criar aplicações e pegar a API.</p>
+<div class="card"><div class="tabs" role="tablist"><button role="tab" aria-selected="true" data-m="login">Entrar</button><button role="tab" aria-selected="false" data-m="signup">Criar conta</button></div>
+<div id="f"><label id="ln" hidden>Nome<input id="n" autocomplete="name" maxlength="30"></label><label>E-mail<input id="e" type="email" autocomplete="email"></label><label>Senha<input id="p" type="password" autocomplete="current-password" maxlength="100"></label>
+<p class="err" id="er" role="alert"></p><button class="btn" id="go" style="width:100%;justify-content:center">Entrar</button></div></div></div></main>
+<footer>Bup for Developers · O bot nunca recebe nem guarda a senha de ninguém.</footer><script src="/dev.js"></script>
+<script>
+let m='login';const q=new URLSearchParams(location.search),nx=q.get('next')||'/painel';if(q.get('next'))document.getElementById('why').textContent='Entre ou crie sua conta antes de continuar.';
+const next=/^\/[a-z]/.test(nx)&&!nx.startsWith('//')?nx:'/painel';
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{m=b.dataset.m;document.querySelectorAll('.tabs button').forEach(x=>x.setAttribute('aria-selected',x===b));ln.hidden=m!=='signup';go.textContent=m==='signup'?'Criar conta':'Entrar';p.autocomplete=m==='signup'?'new-password':'current-password';er.textContent=''});
+go.onclick=async()=>{er.textContent='';go.disabled=true;try{await api('auth',{action:m,name:n.value,email:e.value,password:p.value});location.href=next}catch(x){er.textContent=x.message}go.disabled=false};
+document.getElementById('f').addEventListener('keydown',x=>x.key==='Enter'&&go.click());
+</script></body></html>

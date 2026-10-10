@@ -1,0 +1,26 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Criar App · Bup for Developers</title><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Silkscreen:wght@400;700&display=swap"><link rel="stylesheet" href="/dev.css"></head><body>
+<main><div class="page"><h1>Criar App</h1><p class="lead" id="sub">Três passos rápidos.</p>
+<div class="card" id="gate" hidden><p class="lead" style="margin-bottom:20px">Para criar uma aplicação você precisa de uma conta de desenvolvedor.</p><a class="btn" href="/entrar?next=/criar-app">Criar conta ou entrar</a></div>
+<div class="card" id="wz" hidden><div class="steps"><i class="on"></i><i></i><i></i></div>
+<div data-s="0"><h2 style="margin-top:0">Qual o nome da aplicação?</h2><label>Nome<input id="nm" maxlength="40" placeholder="Ex.: Bot da minha loja"></label><p class="err" id="e0" role="alert"></p><button class="btn" data-go="1">Continuar</button></div>
+<div data-s="1" hidden><h2 style="margin-top:0">Para qual fim vai usar?</h2>
+<button class="opt" data-p="discord-bot"><svg class="i" viewBox="0 0 24 24" width="26" height="26"><rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 8V4M9 14h.01M15 14h.01"/></svg><div><b>Bot de Discord</b><span>Disponível agora</span></div></button>
+<div class="opt soon" aria-disabled="true"><svg class="i" viewBox="0 0 24 24" width="26" height="26"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg><div><b>Site ou aplicativo <em>em breve</em></b><span>Ainda não disponível</span></div></div>
+<button class="btn g" data-go="0">Voltar</button></div>
+<div data-s="2" hidden><h2 style="margin-top:0">O que você quer ter?</h2>
+<button class="opt" data-f="connect-accounts"><svg class="i" viewBox="0 0 24 24" width="26" height="26"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg><div><b>Conectar contas com sistemas</b><span>A pessoa autoriza no Bup e o bot recebe o ID e o nome dela</span></div></button>
+<div class="opt soon" aria-disabled="true"><svg class="i" viewBox="0 0 24 24" width="26" height="26"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><div><b>Mais recursos <em>em breve</em></b><span>Ainda não disponível</span></div></div>
+<div class="note" style="margin-bottom:14px"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg><div>O bot não pode guardar senha de ninguém. Ele só recebe o que a pessoa autorizar.</div></div>
+<p class="err" id="e2" role="alert"></p><button class="btn g" data-go="1">Voltar</button></div></div>
+<div class="card" id="done" hidden><h2 style="margin-top:0">Aplicação criada</h2><p class="lead" style="margin-bottom:6px">Copie sua chave agora. Por segurança ela não aparece de novo, mas você pode gerar outra no painel.</p>
+<div class="key"><code id="ky"></code><button class="btn sm" id="cp">Copiar</button></div>
+<div class="btns" style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn" href="/docs">Ver documentação</a><a class="btn g" href="/painel">Minhas apps</a></div></div></div></main>
+<footer>Bup for Developers · O bot nunca recebe nem guarda a senha de ninguém.</footer><script src="/dev.js"></script>
+<script>
+let P='',cur=0;const A={};
+const show=n=>{cur=n;document.querySelectorAll('[data-s]').forEach(d=>d.hidden=+d.dataset.s!==n);document.querySelectorAll('.steps i').forEach((i,k)=>i.classList.toggle('on',k<=n))};
+document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{const t=+b.dataset.go;if(t===1&&cur===0){if(nm.value.trim().length<2){e0.textContent='Dê um nome à aplicação (mínimo 2 letras).';return}e0.textContent=''}show(t)});
+document.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{P=b.dataset.p;show(2)});
+document.querySelectorAll('[data-f]').forEach(b=>b.onclick=async()=>{e2.textContent='';try{const r=await api('apps',{action:'create',name:nm.value,purpose:P,feature:b.dataset.f});wz.hidden=true;done.hidden=false;sub.hidden=true;ky.textContent=r.key;cp.onclick=()=>copy(r.key,cp)}catch(x){e2.textContent=x.message}});
+me().then(u=>{(u?wz:gate).hidden=false});
+</script></body></html>
